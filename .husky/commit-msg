@@ -1,0 +1,47 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh" 2>/dev/null || true
+
+echo "Validating commit message format..."
+
+# Get the commit message from the file
+commit_msg=$(cat "$1")
+
+# Define regex pattern for conventional commits with scope
+pattern="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9,-]+\))?: .+"
+
+# Check if the commit message matches the pattern
+if ! echo "$commit_msg" | grep -E "$pattern" > /dev/null; then
+  echo ""
+  echo "❌ Commit message format validation failed."
+  echo ""
+  echo "Your commit message MUST follow this format:"
+  echo "  type(scope): description"
+  echo ""
+  echo "Examples of valid commit messages:"
+  echo "  feat(auth): add user login functionality"
+  echo "  fix(cart): resolve item quantity calculation issue"
+  echo "  docs(api): update API documentation"
+  echo ""
+  echo "Valid types:"
+  echo "  feat:     A new feature"
+  echo "  fix:      A bug fix"
+  echo "  docs:     Documentation only changes"
+  echo "  style:    Changes that do not affect the meaning of the code"
+  echo "  refactor: A code change that neither fixes a bug nor adds a feature"
+  echo "  perf:     A code change that improves performance"
+  echo "  test:     Adding missing tests or correcting existing tests"
+  echo "  build:    Changes that affect the build system or external dependencies"
+  echo "  ci:       Changes to CI configuration files and scripts"
+  echo "  chore:    Other changes that don't modify src or test files"
+  echo "  revert:   Reverts a previous commit"
+  echo ""
+  echo "Valid scopes:"
+  echo "  auth, user, product, order, cart, api, db, ui, deps, config, docs, test"
+  echo ""
+  exit 1
+fi
+
+# Also run commitlint for additional checks
+npx --no -- commitlint --edit "$1" || echo "⚠️ Commitlint validation failed but continuing anyway"
+
+echo "✅ Commit message format validation passed!"

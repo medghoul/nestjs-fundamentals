@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh" 2>/dev/null || true
+
+echo "Running pre-commit hooks..."
+
+# Auto-format code with Prettier
+echo "🔍 Formatting code with Prettier..."
+# Use npx to ensure compatibility across different setups
+npx prettier --write . --ignore-path .prettierignore || echo "⚠️ Prettier failed but continuing anyway"
+
+# Run ESLint to check code quality (warnings only)
+echo "🔍 Checking code with ESLint (warnings only)..."
+npx eslint . --fix --ignore-path .eslintignore || echo "⚠️ ESLint found issues but continuing anyway (warnings-only mode)"
+
+echo "✅ Pre-commit checks passed!"

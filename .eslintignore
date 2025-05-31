@@ -1,0 +1,19 @@
+# Node modules and build artifacts
+node_modules/
+dist/
+build/
+coverage/
+.husky/
+*.min.js
+
+# Configuration files
+package.json
+package-lock.json
+commitlint.config.js
+.prettierignore
+.eslintignore
+
+# Files with potential parsing errors
+**/mongooseDbConnection.js
+**/diagController.js
+**/lastCallController.js

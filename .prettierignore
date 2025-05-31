@@ -1,0 +1,14 @@
+# Configuration files that shouldn't be reformatted
+.husky/
+commitlint.config.js
+package.json
+package-lock.json
+*.lock
+*.bak
+
+# Common build directories
+node_modules/
+dist/
+build/
+coverage/
+.git/
