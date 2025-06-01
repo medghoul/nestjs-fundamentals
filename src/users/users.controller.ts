@@ -18,11 +18,12 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update() {
-    return 'User updated';
+  update(@Param('id') id: string) {
+    return `User updated ${id}`;
   }
+
   @Delete(':id')
-  delete() {
-    return 'User deleted';
+  delete(@Param('id') id: string) {
+    return `User deleted ${id}`;
   }
 }
